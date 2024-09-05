@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Cost Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            color: #666;
+        }
+        input[type="number"] {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        input[type="submit"], button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #45a049;
+        }
+        button#clear {
+            background-color: #f44336;
+        }
+        button#clear:hover {
+            background-color: #d32f2f;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Meeting Cost Calculator</h1>
+        <form method="POST">
+            <label for="participants">Number of Participants:</label>
+            <input type="number" id="participants" name="participants" value="{{ participants }}" required>
+            
+            <label for="hourly_rate">Hourly Rate per Person (€):</label>
+            <input type="number" id="hourly_rate" name="hourly_rate" value="{{ hourly_rate }}" required>
+            
+            <label for="meeting_length">Meeting Length (minutes):</label>
+            <input type="number" id="meeting_length" name="meeting_length" value="{{ meeting_length }}" required>
+            
+            <div class="button-group">
+                <input type="submit" name="calculate" value="Calculate">
+                <button type="button" id="clear">Clear</button>
+            </div>
+        </form>
+        
+        {% if result is not none %}
+        <div class="result">
+            <h2>Meeting Costs: €{{ result|round(2) }}</h2>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('clear').addEventListener('click', function() {
+            document.getElementById('participants').value = '';
+            document.getElementById('hourly_rate').value = '';
+            document.getElementById('meeting_length').value = '';
+            document.querySelector('.result').innerHTML = '';
+        });
+    </script>
+</body>
+</html>
